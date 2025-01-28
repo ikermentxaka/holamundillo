@@ -153,7 +153,7 @@
 
     <div id="game-container" class="hidden">
         <h1>¡Partida en curso!</h1>
-        <h2>Tiempo restante:</h2>
+        <h2>Siguiente subida de ciegas en:</h2>
         <p id="timer">00:00</p>
         <h2>Valor de las ciegas:</h2>
         <p id="blinds">Ciega grande: €0</p>
@@ -180,7 +180,7 @@
         const totalPot = players * entryFee;
 
         // Mostrar los datos en la interfaz del juego
-        document.getElementById('blinds').textContent = `Ciega grande: €${bigBlind} Ciega pequeña:€${bigBlind/2}`;
+        document.getElementById('blinds').textContent = `Ciega grande: €${bigBlind} --- Ciega pequeña:€${bigBlind/2}`;
         document.getElementById('pot').textContent = `€${totalPot}`;
 
         // Ocultar el formulario y mostrar el contenedor del juego
