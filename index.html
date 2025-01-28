@@ -1,129 +1,121 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Programa de Póker</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      background-color: black;
-    }
-    header {
-      background-color: B3B3B3;
-      padding: 0px;
-    }
-    header img {
-      max-width: 100%;
-      height: auto;
-    }
-    .container {
-      padding: 20px;
-    } 
-    .timer {
-      font-size: 6em;
-      font-weight: bold;
-      color: white;
-      margin: 20px 0;
-    }
-    .blinds, .prize {
-      font-size: 1.5em;
-      color: #ffffff;
-    }
-    .input-section {
-      margin: 20px 0;
-    }
-    .input-section input {
-      margin: 5px;
-      padding: 8px;
-      font-size: 1em;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 1em;
-      background-color: #b00000;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa de Poker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: black;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header img {
+            max-width: 100%;
+            height: auto;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <img src="banner.png" alt="Banner del programa">
-  </header>
-  <div class="container">
-    <div class="input-section">
-      <h2>Ingrese los datos de la partida</h2>
-      <label for="players">Número de jugadores:</label>
-      <input type="number" id="players" placeholder="Ej: 5"><br>
-      <label for="entryFee">Precio de entrada (€):</label>
-      <input type="number" id="entryFee" placeholder="Ej: 10"><br>
-      <label for="bigBlind">Ciega grande inicial (€):</label>
-      <input type="number" id="bigBlind" placeholder="Ej: 1"><br>
-      <label for="interval">Intervalo de tiempo (min):</label>
-      <input type="number" id="interval" placeholder="Ej: 15"><br>
-      <button onclick="startGame()">Iniciar partida</button>
+
+<header>
+    <img src="./banner.png" alt="Banner de Poker">
+</header>
+
+<main>
+    <div id="form-container">
+        <h1>Configuración de la Partida</h1>
+        <form id="setup-form">
+            <label for="players">Número de jugadores:</label><br>
+            <input type="number" id="players" name="players" required><br><br>
+
+            <label for="entry-fee">Precio de entrada (€):</label><br>
+            <input type="number" id="entry-fee" name="entry-fee" required><br><br>
+
+            <label for="big-blind">Ciega grande inicial (€):</label><br>
+            <input type="number" id="big-blind" name="big-blind" required><br><br>
+
+            <label for="interval">Intervalo para subir ciegas (minutos):</label><br>
+            <input type="number" id="interval" name="interval" required><br><br>
+
+            <button type="button" onclick="startGame()">Iniciar Partida</button>
+        </form>
     </div>
 
-    <div id="game" style="display: none;">
-      <div class="timer" id="timer">00:00</div>
-      <div class="blinds" id="currentBlinds">Ciega grande: 0€, Ciega pequeña: 0€</div>
-      <div class="prize" id="prizePool">Premio del bote: 0€</div>
+    <div id="game-container" class="hidden">
+        <h1>¡Partida en curso!</h1>
+        <h2>Tiempo restante:</h2>
+        <p id="timer">00:00</p>
+        <h2>Valor de las ciegas:</h2>
+        <p id="blinds">Ciega grande: €0</p>
+        <h2>Premio del bote:</h2>
+        <p id="pot">€0</p>
     </div>
-  </div>
+</main>
 
-  <script>
-    let timerInterval;
-    let timeRemaining;
-    let bigBlind, smallBlind, prizePool;
-
+<script>
     function startGame() {
-      // Obtener datos ingresados
-      const players = parseInt(document.getElementById("players").value);
-      const entryFee = parseFloat(document.getElementById("entryFee").value);
-      bigBlind = parseFloat(document.getElementById("bigBlind").value);
-      const interval = parseInt(document.getElementById("interval").value);
+        // Obtener los valores ingresados por el usuario
+        const players = document.getElementById('players').value;
+        const entryFee = document.getElementById('entry-fee').value;
+        const bigBlind = document.getElementById('big-blind').value;
+        const interval = document.getElementById('interval').value;
 
-      if (!players || !entryFee || !bigBlind || !interval) {
-        alert("Por favor, completa todos los campos.");
-        return;
-      }
-
-      // Calcular el bote total
-      prizePool = players * entryFee;
-
-      // Mostrar datos iniciales
-      document.getElementById("game").style.display = "block";
-      document.getElementById("prizePool").textContent = `Premio del bote: ${prizePool}€`;
-      document.getElementById("currentBlinds").textContent = `Ciega grande: ${bigBlind}€    Ciega pequeña: ${bigBlind / 2}€`;
-
-      // Configurar el temporizador
-      timeRemaining = interval * 60; // minutos a segundos
-      updateTimer();
-      timerInterval = setInterval(() => {
-        timeRemaining--;
-        updateTimer();
-        if (timeRemaining <= 0) {
-          timeRemaining = interval * 60; // Reiniciar el temporizador
-          bigBlind *= 2; // Duplicar las ciegas
-          document.getElementById("currentBlinds").textContent = `Ciega grande: ${bigBlind}€, Ciega pequeña: ${bigBlind / 2}€`;
+        if (!players || !entryFee || !bigBlind || !interval) {
+            alert('Por favor, completa todos los campos.');
+            return;
         }
-      }, 1000);
+
+        // Calcular el bote total
+        const totalPot = players * entryFee;
+
+        // Mostrar los datos en la interfaz del juego
+        document.getElementById('blinds').textContent = `Ciega grande: €${bigBlind}`;
+        document.getElementById('pot').textContent = `€${totalPot}`;
+
+        // Ocultar el formulario y mostrar el contenedor del juego
+        document.getElementById('form-container').classList.add('hidden');
+        document.getElementById('game-container').classList.remove('hidden');
+
+        // Iniciar el contador regresivo
+        startTimer(interval, bigBlind);
     }
 
-    function updateTimer() {
-      const minutes = Math.floor(timeRemaining / 60);
-      const seconds = timeRemaining % 60;
-      document.getElementById("timer").textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    function startTimer(interval, bigBlind) {
+        let timeRemaining = interval * 60; // Convertir minutos a segundos
+        const timerElement = document.getElementById('timer');
+        const blindsElement = document.getElementById('blinds');
+        let currentBigBlind = parseFloat(bigBlind);
+
+        const timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timeRemaining === 0) {
+                // Subir las ciegas cuando el tiempo llegue a 0
+                currentBigBlind *= 2;
+                blindsElement.textContent = `Ciega grande: €${currentBigBlind}`;
+                timeRemaining = interval * 60; // Reiniciar el tiempo
+            } else {
+                timeRemaining--;
+            }
+        }, 1000);
     }
-  </script>
+</script>
+
 </body>
 </html>
