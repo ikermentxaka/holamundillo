@@ -63,6 +63,7 @@
         <p id="blinds">Ciega grande: €0</p>
         <h2>Premio del bote:</h2>
         <p id="pot">€0</p>
+        <button onclick="toggleFullScreen()">Pantalla completa</button>
     </div>
 </main>
 
@@ -114,6 +115,16 @@
                 timeRemaining--;
             }
         }, 1000);
+    }
+
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
     }
 </script>
 
