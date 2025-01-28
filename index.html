@@ -5,25 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programa de Poker</title>
     <style>
+        /* Estilos generales del cuerpo */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: black;
+            background-color: #f4f4f4;
+            color: #333;
         }
+
+        /* Estilo del encabezado */
         header {
-            background-color: gray;
+            background-color: #000;
             padding: 10px 0;
             text-align: center;
         }
+
         header img {
             max-width: 100%;
             height: auto;
         }
+
+        /* Estilo principal de la página */
         main {
             padding: 20px;
             text-align: center;
         }
+
+        /* Contenedor del formulario de configuración */
+        #form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Formulario de configuración */
+        #setup-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Estilo de la partida en curso */
+        #game-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Temporizador */
+        #timer {
+            font-size: 2em;
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        /* Información sobre las ciegas */
+        #blinds,
+        #pot {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        /* Botón de pantalla completa */
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Clase oculta */
         .hidden {
             display: none;
         }
