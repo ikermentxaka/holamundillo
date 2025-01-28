@@ -98,7 +98,7 @@
         /* Información sobre las ciegas */
         #blinds,
         #pot {
-            font-size: 1.5em;
+            font-size: 3em;
             margin: 10px 0;
             color: #white;
         }
@@ -180,7 +180,7 @@
         const totalPot = players * entryFee;
 
         // Mostrar los datos en la interfaz del juego
-        document.getElementById('blinds').textContent = `Ciega grande: €${bigBlind} --- Ciega pequeña:€${bigBlind/2}`;
+        document.getElementById('blinds').textContent = `€${bigBlind} --- €${bigBlind/2}`;
         document.getElementById('pot').textContent = `€${totalPot}`;
 
         // Ocultar el formulario y mostrar el contenedor del juego
